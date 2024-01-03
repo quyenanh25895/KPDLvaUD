@@ -1,4 +1,3 @@
-import pandas as pd
 from MyPackage.KFold.kfold import *
 from MyPackage.Predicted.pred import *
 
@@ -10,5 +9,5 @@ print('KFold:', "_"*30)
 kfold_test(label_encoder, X_train, X_test, y_train, y_test)
 
 d_label = pd.DataFrame(label)
-d_label.to_csv('Final/Predicted.csv', index=True)
+d_label.to_csv('Final/Predicted.csv', index=False)
 
