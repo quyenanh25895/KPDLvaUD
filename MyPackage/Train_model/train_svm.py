@@ -40,7 +40,7 @@ def train_svm():
     y = label_encoder.fit_transform(data['Diagnosis'])[2:]
 
     # Chia dữ liệu thành bộ train và bộ test (test_size là phần trăm của bộ test)
-    X_train, X_test, y_train, y_test = train_test_split(data_finally, y, test_size=0.2, shuffle=True, random_state=1506)
+    X_train, X_test, y_train, y_test = train_test_split(data_finally, y, test_size=0.1, shuffle=True, random_state=15)
 
     svm_model = SVC(kernel='rbf', C=1000)
     svm_model.fit(X_train, y_train)

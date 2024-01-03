@@ -1,23 +1,26 @@
 from MyPackage.Train_model.train_svm import *
+import warnings
+warnings.filterwarnings("ignore")
+
 
 
 def predicted(label_encoder, X_train, X_test, y_train, y_test, model):
     y_pred = model.predict(X_test)
 
-    f1 = f1_score(y_test, y_pred, average='micro')
+    f1 = f1_score(y_test, y_pred, average='micro', zero_division=1)
     accuracy = accuracy_score(y_test, y_pred)
-    recall = recall_score(y_test, y_pred, average='micro')
-    pre = precision_score(y_test, y_pred, average='micro')
+    recall = recall_score(y_test, y_pred, average='micro', zero_division=1)
+    pre = precision_score(y_test, y_pred, average='micro', zero_division=1)
     cm = np.array(confusion_matrix(y_test, y_pred, labels=[0, 1, 2, 3]))
 
     confusion = pd.DataFrame(cm, index=['is COPD', 'is HC', 'is Asthma', 'is Infected'],
                              columns=['pred COPD', 'pred HC', 'pred Asthma', 'pred Infected'])
-    print(confusion)
+    print("Confusion Matrix:\n",confusion)
     print(classification_report(y_test, y_pred))
 
     data = pd.read_csv('Data/DataFinal.csv')
     des = data.describe(include='all')
-    print(des)
+    print("Describe:\n",des)
 
     # Hiển thị kết quả và đánh giá mô hình
     print("Độ chính xác: {:.2f}%".format(accuracy * 100))
