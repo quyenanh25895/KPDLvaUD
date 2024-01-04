@@ -24,12 +24,10 @@ def read_data():
     return data
 
 def preprocessing_data(data):
-    # Tách dữ liệu đầu vào (features) và nhãn (labels)
-    X = data.drop('Diagnosis', axis=1)
-    X = np.array(X)
+    X = np.array(data)
 
     # Dữ liệu training chưa khử NaN bỏ id và nhãn
-    data_init = X[2:, 1:8]
+    data_init = X[2:, 2:8]
     df = pd.DataFrame(data_init)
 
     # Tạo một đối tượng SimpleImputer với chiến lược điền giá trị trung bình
@@ -39,12 +37,13 @@ def preprocessing_data(data):
     # Điền giá trị trung bình vào các giá trị khuyết trong DataFrame
     df_filled = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)
 
-
+    #Bieu do tuong quan giua cac cot du lieu
     plt.figure(figsize=(10, 6))
     correlation_matrix = df_filled.corr().round(2)
     sns.heatmap(correlation_matrix, cmap="coolwarm", annot=True)
     plt.title("Bieu do tuong quan giua cac cot")
     plt.show()
+
     df_t = np.array(df_filled)
     data_finally = df_t.astype(float)
 
