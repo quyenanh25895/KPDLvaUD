@@ -1,7 +1,8 @@
+from sklearn.metrics import r2_score, mean_squared_error
+
 from MyPackage.Train_model.train_svm import *
 import warnings
 warnings.filterwarnings("ignore")
-
 
 
 def predicted(label_encoder, X_train, X_test, y_train, y_test, model):
@@ -35,3 +36,27 @@ def predicted(label_encoder, X_train, X_test, y_train, y_test, model):
         # print("Nhãn dự đoán:", decoded_label)
         a.append(decoded_label)
     return a
+
+def danh_gia_mo_hinh(X_train, X_test, y_train, y_test, model):
+    y_pred = model.predict(X_test)  # dự báo y_pred dựa trên tập x_test
+    y_pred_train = model.predict(X_train)
+
+    # Đánh giá mô hình bằng một số các metric
+    print('--------Kết quả trên dữ liệu huấn luyện-------')
+    mse_train = mean_squared_error(y_train, y_pred_train)
+    r2_train = r2_score(y_train, y_pred_train)
+
+    print("Mean Squared Error (MSE):", mse_train)
+    print("R-squared (R2) Score:", r2_train)
+
+    print('--------Kết quả thẩm định-------')
+    mse = mean_squared_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
+
+    print("Mean Squared Error (MSE):", mse)
+    print("R-squared (R2) Score:", r2)
+    df_result = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
+    df_compare = df_result.head(10)
+    print(df_compare)
+    df_compare.plot(kind='line')
+    plt.show()
